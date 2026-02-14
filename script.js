@@ -7,28 +7,32 @@ const stopBtn = document.getElementById('stop-btn');
 rollBtn.addEventListener('click', () => {
     rollBtn.disabled = true;
     stopBtn.disabled = false;
+    
+    // 실행 중 효과 추가
     displayImg.classList.add('fast-running');
 
-    // 0.01초(10ms)마다 이미지 무작위 변경 - 초고속 모드
+    // 0.07초(70ms) 간격: 인지 가능하면서도 빠른 속도
     timer = setInterval(() => {
         const randomNum = Math.floor(Math.random() * 63) + 1;
-        const fileName = `Q_${randomNum}.png`; // 파일명이 Q_1.png ~ Q_63.png 인 경우
+        const fileName = `Q_${randomNum}.png`; 
         displayImg.src = encodeURI(fileName);
-    }, 10); 
+    }, 70); 
 });
 
 // STOP 버튼 클릭 시
 stopBtn.addEventListener('click', () => {
     stopBtn.disabled = true;
     rollBtn.disabled = false;
+    
+    // 효과 제거
     displayImg.classList.remove('fast-running');
 
     // 루프 정지
     clearInterval(timer);
     
-    // 멈췄을 때 강조 효과
-    displayImg.style.border = "5px solid gold";
+    // 멈췄을 때 '탁!' 멈춘 느낌을 주는 반짝임 효과
+    displayImg.style.filter = "brightness(1.5)";
     setTimeout(() => {
-        displayImg.style.border = "none";
-    }, 500);
+        displayImg.style.filter = "brightness(1)";
+    }, 200);
 });
